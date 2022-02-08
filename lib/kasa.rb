@@ -17,8 +17,14 @@ class Kasa
   def sysinfo
     my_string = '{"system": {"get_sysinfo": null}}'
 
-    x = Socket.tcp(@ip, 9999) do |s|
-      s.write encode my_string
+    x = transport my_string
+
+    JSON.parse(decode(x))
+  end
+
+  def transport(line)
+    Socket.tcp(@ip, 9999) do |s|
+      s.write encode line
 
       lenstr = s.recv(4).unpack1('I>')
       dope = ''
@@ -28,8 +34,6 @@ class Kasa
       end
       dope
     end
-
-    JSON.parse(decode(x))
   end
 
   def encode(line)
