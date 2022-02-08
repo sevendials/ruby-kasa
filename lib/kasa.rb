@@ -16,16 +16,9 @@ class Kasa
 
   def sysinfo
     my_string = '{"system": {"get_sysinfo": null}}'
-    key = START_KEY
 
-    plainbytes = my_string.unpack('C*').map do |x|
-      key = key ^ x
-      key
-    end
-
-    payload = ([plainbytes.length] + plainbytes).pack('I>C*')
     x = Socket.tcp(@ip, 9999) do |s|
-      s.write payload
+      s.write encode my_string
 
       lenstr = s.recv(4).unpack1('I>')
       dope = ''
@@ -36,11 +29,25 @@ class Kasa
       dope
     end
 
+    JSON.parse(decode(x))
+  end
+
+  def encode(line)
     key = START_KEY
-    JSON.parse(x.unpack('C*').map do |cypherbyte|
+
+    plainbytes = line.unpack('C*').map do |x|
+      key = key ^ x
+      key
+    end
+    ([plainbytes.length] + plainbytes).pack('I>C*')
+  end
+
+  def decode(line)
+    key = START_KEY
+    line.unpack('C*').map do |cypherbyte|
       plainbyte = key ^ cypherbyte
       key = cypherbyte
       plainbyte
-    end.pack('C*'))
+    end.pack('C*')
   end
 end
