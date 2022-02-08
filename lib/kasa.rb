@@ -14,7 +14,7 @@ class Kasa
     @ip = ip
   end
 
-  def get_sysinfo
+  def sysinfo
     my_string = '{"system": {"get_sysinfo": null}}'
     key = START_KEY
 

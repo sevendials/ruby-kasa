@@ -10,6 +10,6 @@ RSpec.describe Kasa do
   end
 
   it 'does something useful' do
-    expect(package.get_sysinfo['system']['get_sysinfo']['alias']).to eq('TP-LINK_Power Strip_DD06')
+    expect(package.sysinfo['system']['get_sysinfo']['alias']).to eq('TP-LINK_Power Strip_DD06')
   end
 end
