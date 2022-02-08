@@ -35,19 +35,19 @@ class Kasa
   def encode(line)
     key = START_KEY
 
-    plainbytes = line.unpack('C*').map do |x|
-      key = key ^ x
+    cypherbytes = line.unpack('C*').map do |byte|
+      key = key ^ byte
       key
     end
-    ([plainbytes.length] + plainbytes).pack('I>C*')
+    ([cypherbytes.length] + cypherbytes).pack('I>C*')
   end
 
   def decode(line)
     key = START_KEY
     line.unpack('C*').map do |cypherbyte|
-      plainbyte = key ^ cypherbyte
+      byte = key ^ cypherbyte
       key = cypherbyte
-      plainbyte
+      byte
     end.pack('C*')
   end
 end
