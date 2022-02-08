@@ -5,7 +5,11 @@ RSpec.describe Kasa do
     expect(Kasa::VERSION).not_to be nil
   end
 
+  let :package do
+    described_class.new "192.168.1.118"
+  end
+
   it "does something useful" do
-    expect(false).to eq(true)
+    expect(package.get_sysinfo["system"]["get_sysinfo"]["alias"]).to eq("TP-LINK_Power Strip_DD06")
   end
 end
