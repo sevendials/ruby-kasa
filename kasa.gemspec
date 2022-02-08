@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "json"
+  spec.add_development_dependency "rubocop-rspec"
   spec.add_development_dependency "irb"
   spec.add_development_dependency "rdoc"
 
