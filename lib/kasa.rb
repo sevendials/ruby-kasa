@@ -15,42 +15,42 @@ class Kasa
   end
 
   def sysinfo
-    my_string = '{"system": {"get_sysinfo": null}}'
-
-    x = transport my_string
-
-    JSON.parse(decode(x))
+    get({ 'system' => { 'get_sysinfo' => nil } })
   end
 
-  def transport(line)
-    Socket.tcp(@ip, 9999) do |s|
-      s.write encode line
+  def get(request)
+    JSON.parse decode(transport(encode(request.to_json)))
+  end
 
-      lenstr = s.recv(4).unpack1('I>')
-      dope = ''
-      while lenstr.positive?
-        dope += s.recv(1024)
-        lenstr -= 1024
+  def transport(request)
+    Socket.tcp(@ip, 9999) do |s|
+      s.write request
+
+      result_length = s.recv(4).unpack1('I>')
+      result = ''
+      while result_length.positive?
+        result += s.recv(1024)
+        result_length -= 1024
       end
-      dope
+      result
     end
   end
 
-  def encode(line)
+  def encode(plain)
     key = START_KEY
 
-    cypherbytes = line.unpack('C*').map do |byte|
+    enc_bytes = plain.unpack('C*').map do |byte|
       key = key ^ byte
       key
     end
-    ([cypherbytes.length] + cypherbytes).pack('I>C*')
+    ([enc_bytes.length] + enc_bytes).pack('I>C*')
   end
 
   def decode(line)
     key = START_KEY
-    line.unpack('C*').map do |cypherbyte|
-      byte = key ^ cypherbyte
-      key = cypherbyte
+    line.unpack('C*').map do |enc_byte|
+      byte = key ^ enc_byte
+      key = enc_byte
       byte
     end.pack('C*')
   end
