@@ -12,7 +12,7 @@ class Kasa
   START_KEY = 171
   ON = 1
   OFF = 0
-  # Your code goes here...
+
   def initialize(ip)
     @ip = ip
   end
