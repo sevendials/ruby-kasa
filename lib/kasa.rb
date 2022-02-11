@@ -2,6 +2,7 @@
 
 require 'socket'
 require 'json'
+require 'base64'
 require_relative 'kasa/version'
 
 # Control local Kasa devices
@@ -15,8 +16,26 @@ class Kasa
   end
 
   def sysinfo
-    get({ 'system' => { 'get_sysinfo' => nil } })
+    get({ 'system' => { 'get_sysinfo' => nil } })['system']['get_sysinfo']
   end
+
+  def on
+    get({ system: { set_relay_state: { state: 1 } } })
+  end
+
+  def off
+    get({ system: { set_relay_state: { state: 0 } } })
+  end
+
+  def brightness
+    sysinfo['brightness']
+  end
+
+  def brightness=(level)
+    get({ 'smartlife.iot.dimmer': { set_brightness: { brightness: level } } })
+  end
+
+  private
 
   def get(request)
     JSON.parse decode(transport(encode(request.to_json)))
@@ -48,6 +67,7 @@ class Kasa
 
   def decode(line)
     key = START_KEY
+
     line.unpack('C*').map do |enc_byte|
       byte = key ^ enc_byte
       key = enc_byte
