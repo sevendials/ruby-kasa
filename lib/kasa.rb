@@ -10,21 +10,23 @@ class Kasa
   attr_accessor :ip
 
   START_KEY = 171
+  ON = 1
+  OFF = 0
   # Your code goes here...
   def initialize(ip)
     @ip = ip
   end
 
   def sysinfo
-    get({ 'system' => { 'get_sysinfo' => nil } })['system']['get_sysinfo']
+    get('/system/get_sysinfo')['system']['get_sysinfo']
   end
 
   def on
-    get({ system: { set_relay_state: { state: 1 } } })
+    relay ON
   end
 
   def off
-    get({ system: { set_relay_state: { state: 0 } } })
+    relay OFF
   end
 
   def brightness
@@ -32,12 +34,22 @@ class Kasa
   end
 
   def brightness=(level)
-    get({ 'smartlife.iot.dimmer': { set_brightness: { brightness: level } } })
+    get('/smartlife.iot.dimmer/set_brightness/brightness', level)
   end
 
   private
 
-  def get(request)
+  def relay(state)
+    get('/system/set_relay_state/state', state)
+  end
+
+  def get(location, value = nil)
+    request = value
+    location = location.split('/').reject(&:empty?).reverse
+    location.each do |e|
+      request = { e => request }
+    end
+
     JSON.parse decode(transport(encode(request.to_json)))
   end
 
