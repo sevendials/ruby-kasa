@@ -99,7 +99,7 @@ RSpec.describe Kasa do
   end
 
   it 'does something useful' do
-    allow(package).to receive(:transport).and_return(response_encrypted)
+    allow(Kasa::Protocol).to receive(:transport).and_return(response_encrypted)
     expect(package.sysinfo).to eq(response)
   end
 end
