@@ -11,10 +11,8 @@ require_relative 'kasa/protocol'
 class Kasa
   attr_accessor :ip
 
-  START_KEY = 171
   ON = 1
   OFF = 0
-  TIMEOUT = 2
 
   def initialize(ip)
     @ip = ip
@@ -37,13 +35,13 @@ class Kasa
   end
 
   def brightness=(level)
-    get('/smartlife.iot.dimmer/set_brightness/brightness', level)
+    Kasa::Protocol.get(@ip, '/smartlife.iot.dimmer/set_brightness/brightness', level)
   end
 
   private
 
   def relay(state)
-    get('/system/set_relay_state/state', state)
+    Kasa::Protocol.get(@ip, '/system/set_relay_state/state', state)
   end
 end
 # primary_intf = Socket.getifaddrs.detect { |intf| intf.addr.ipv4_private? }
