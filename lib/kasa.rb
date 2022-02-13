@@ -19,7 +19,7 @@ class Kasa
   end
 
   def sysinfo
-    Kasa::Protocol.get(@ip, '/system/get_sysinfo')['system']['get_sysinfo']
+    Kasa::Protocol.get(@ip, '/system/get_sysinfo')
   end
 
   def on

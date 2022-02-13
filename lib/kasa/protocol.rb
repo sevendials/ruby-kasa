@@ -13,7 +13,17 @@ class Kasa
         transport(ip, encode(request.to_json))
       end
 
-      JSON.parse decode(encoded_response)
+      strip_location(location, decode(encoded_response))
+    end
+
+    def self.strip_location(location, response)
+      location = location.split('/').reject(&:empty?)
+      response = JSON.parse response
+      location.each do |j|
+        response = (response[j] or response)
+      end
+
+      response
     end
 
     def self.request_to_hash(location, value)
