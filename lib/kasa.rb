@@ -2,6 +2,7 @@
 
 require 'socket'
 require 'json'
+require 'timeout'
 require 'base64'
 require_relative 'kasa/version'
 
@@ -12,6 +13,7 @@ class Kasa
   START_KEY = 171
   ON = 1
   OFF = 0
+  TIMEOUT = 2
 
   def initialize(ip)
     @ip = ip
@@ -44,13 +46,23 @@ class Kasa
   end
 
   def get(location, value = nil)
+    request = request_to_hash location, value
+
+    encoded_response = Timeout.timeout(TIMEOUT) do
+      transport(encode(request.to_json))
+    end
+
+    JSON.parse decode(encoded_response)
+  end
+
+  def request_to_hash(location, value)
     request = value
     location = location.split('/').reject(&:empty?).reverse
     location.each do |e|
       request = { e => request }
     end
 
-    JSON.parse decode(transport(encode(request.to_json)))
+    request
   end
 
   def transport(request)
@@ -87,3 +99,5 @@ class Kasa
     end.pack('C*')
   end
 end
+# primary_intf = Socket.getifaddrs.detect { |intf| intf.addr.ipv4_private? }
+# IPAddr.new("#{primary_intf.addr.ip_address}/#{primary_intf.netmask.ip_address}").to_range.to_a.each do |ip|
