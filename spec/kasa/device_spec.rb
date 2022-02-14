@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Kasa do
-  let :package do
+RSpec.describe Kasa::Device do
+  let :device do
     described_class.new '192.168.1.118'
   end
 
@@ -98,8 +98,8 @@ RSpec.describe Kasa do
     expect(Kasa::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
+  it 'returns correct response' do
     allow(Kasa::Protocol).to receive(:transport).and_return(response_encrypted)
-    expect(package.sysinfo).to eq(response)
+    expect(device.sysinfo).to eq(response)
   end
 end
