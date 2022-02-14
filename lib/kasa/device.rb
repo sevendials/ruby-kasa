@@ -6,6 +6,23 @@ class Kasa
     ON = 1
     OFF = 0
 
+    # Factory
+    def self.new(ip)
+      model = Kasa::Protocol.get(ip, '/system/get_sysinfo')['model']
+      object = if model.eql? 'HS220(US)'
+                 Dimmable.allocate
+               else
+                 NonDimmable.allocate
+               end
+      object.send :initialize, ip
+      object
+    end
+  end
+
+  # Most devices are not dimmable
+  class NonDimmable < Device
+    attr_reader :ip, :sysinfo
+
     # initialize
     def initialize(ip)
       @ip = ip
@@ -27,6 +44,15 @@ class Kasa
       relay OFF
     end
 
+    private
+
+    def relay(state)
+      Kasa::Protocol.get(@ip, '/system/set_relay_state/state', state)
+    end
+  end
+
+  # add dimmable device
+  class Dimmable < NonDimmable
     # Get brightness
     def brightness
       sysinfo['brightness']
@@ -35,12 +61,6 @@ class Kasa
     # Set brightness
     def brightness=(level)
       Kasa::Protocol.get(@ip, '/smartlife.iot.dimmer/set_brightness/brightness', level)
-    end
-
-    private
-
-    def relay(state)
-      Kasa::Protocol.get(@ip, '/system/set_relay_state/state', state)
     end
   end
 end
