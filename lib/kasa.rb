@@ -6,6 +6,7 @@ require 'timeout'
 require 'base64'
 require_relative 'kasa/version'
 require_relative 'kasa/protocol'
+require_relative 'kasa/device'
 
 # Control local Kasa devices
 class Kasa
@@ -14,8 +15,10 @@ class Kasa
   ON = 1
   OFF = 0
 
+  # initialize
   def initialize
-    @devices = {}
+    @devices = []
+    refresh
   end
 
   # Populate devices hash with Kasa devices
@@ -23,8 +26,9 @@ class Kasa
     threads = []
     ip_range.each do |ip|
       threads << Thread.new do
-        @devices[ip.to_s] = sysinfo(ip.to_s)
-      rescue StandardError => e
+        @devices << Kasa::Device.new(ip)
+      rescue StandardError => _e
+        nil
       end
     end
     threads.each(&:join)
@@ -36,36 +40,5 @@ class Kasa
     primary_intf = Socket.getifaddrs.detect { |intf| intf.addr.ipv4_private? }
     cidr = "#{primary_intf.addr.ip_address}/#{primary_intf.netmask.ip_address}"
     IPAddr.new(cidr).to_range.to_a.map(&:to_s)
-  end
-
-  # Get system information
-  def sysinfo(ip)
-    Kasa::Protocol.get(ip, '/system/get_sysinfo')
-  end
-
-  # Turn on light
-  def on
-    relay ON
-  end
-
-  # Turn off light
-  def off
-    relay OFF
-  end
-
-  # Get brightness
-  def brightness
-    sysinfo['brightness']
-  end
-
-  # Set brightness
-  def brightness=(level)
-    Kasa::Protocol.get(@ip, '/smartlife.iot.dimmer/set_brightness/brightness', level)
-  end
-
-  private
-
-  def relay(state)
-    Kasa::Protocol.get(@ip, '/system/set_relay_state/state', state)
   end
 end

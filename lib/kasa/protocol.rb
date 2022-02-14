@@ -5,7 +5,9 @@ class Kasa
   class Protocol
     START_KEY = 171
     TIMEOUT = 2
+    KASA_PORT = 9999
 
+    # get result from request
     def self.get(ip, location, value = nil)
       request = request_to_hash location, value
 
@@ -16,6 +18,7 @@ class Kasa
       strip_location(location, decode(encoded_response))
     end
 
+    # strip away the request location from the response
     def self.strip_location(location, response)
       location = location.split('/').reject(&:empty?)
       response = JSON.parse response
@@ -26,6 +29,7 @@ class Kasa
       response
     end
 
+    # convert location and value to a hash
     def self.request_to_hash(location, value)
       request = value
       location = location.split('/').reject(&:empty?).reverse
@@ -36,8 +40,9 @@ class Kasa
       request
     end
 
+    # Open socket and send request and response
     def self.transport(ip, request)
-      Socket.tcp(ip, 9999) do |s|
+      Socket.tcp(ip, KASA_PORT) do |s|
         s.write request
 
         result_length = s.recv(4).unpack1('I>')
@@ -50,6 +55,7 @@ class Kasa
       end
     end
 
+    # Encrypt and encode
     def self.encode(plain)
       key = START_KEY
 
@@ -60,6 +66,7 @@ class Kasa
       ([enc_bytes.length] + enc_bytes).pack('I>C*')
     end
 
+    # Decrypt and decode
     def self.decode(line)
       key = START_KEY
 
