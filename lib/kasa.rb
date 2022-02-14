@@ -5,8 +5,7 @@ require 'json'
 require 'timeout'
 require 'base64'
 require_relative 'kasa/version'
-require_relative 'kasa/protocol'
-require_relative 'kasa/device'
+require_relative 'kasa/factory'
 
 # Control local Kasa devices
 class Kasa
@@ -23,9 +22,9 @@ class Kasa
     threads = []
     ip_range.each do |ip|
       threads << Thread.new do
-        @devices << Kasa::Device.new(ip)
+        @devices << Kasa::Factory.new(ip)
       rescue StandardError => _e
-        nil
+        puts _e
       end
     end
     threads.each(&:join)

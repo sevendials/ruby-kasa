@@ -29,18 +29,6 @@ class Kasa
       relay OFF
     end
 
-    # Factory
-    def self.new(ip)
-      model = Kasa::Protocol.get(ip, '/system/get_sysinfo')['model']
-      object = if model.eql? 'HS220(US)'
-                 Dimmable.allocate
-               else
-                 NonDimmable.allocate
-               end
-      object.send :initialize, ip
-      object
-    end
-
     private
 
     def relay(state)
