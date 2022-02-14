@@ -24,7 +24,7 @@ class Kasa
       threads << Thread.new do
         @devices << Kasa::Factory.new(ip)
       rescue StandardError => _e
-        puts _e
+        nil
       end
     end
     threads.each(&:join)

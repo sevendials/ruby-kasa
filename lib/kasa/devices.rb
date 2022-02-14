@@ -52,4 +52,8 @@ class Kasa
       Kasa::Protocol.get(@ip, '/smartlife.iot.dimmer/set_brightness/brightness', level)
     end
   end
+
+  # add dimmable device
+  class SmartStrip < NonDimmable
+  end
 end
