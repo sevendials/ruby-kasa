@@ -12,9 +12,6 @@ require_relative 'kasa/device'
 class Kasa
   attr_reader :devices
 
-  ON = 1
-  OFF = 0
-
   # initialize
   def initialize
     @devices = []

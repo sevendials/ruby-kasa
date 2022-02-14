@@ -3,6 +3,9 @@
 class Kasa
   # kasa device
   class Device
+    ON = 1
+    OFF = 0
+
     # initialize
     def initialize(ip)
       @ip = ip
