@@ -1,13 +1,18 @@
+---
+require:
+  - rubocop-rspec
 AllCops:
-  TargetRubyVersion: 2.6
+  Exclude:
+    - 'bin/*'
+    - 'vendor/**/*'
+    - '.bundle/**/*'
+    - '*.gemspec'
+  NewCops: enable
 
-Style/StringLiterals:
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*_spec.rb'
+Style/DocumentationMethod:
   Enabled: true
-  EnforcedStyle: double_quotes
-
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-  EnforcedStyle: double_quotes
-
-Layout/LineLength:
-  Max: 120
