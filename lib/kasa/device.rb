@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Kasa
-  # kasa device
+  # Common methods across kasa devices
   class Device
     ON = 1
     OFF = 0
