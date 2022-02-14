@@ -6,22 +6,7 @@ class Kasa
     ON = 1
     OFF = 0
 
-    # Factory
-    def self.new(ip)
-      model = Kasa::Protocol.get(ip, '/system/get_sysinfo')['model']
-      object = if model.eql? 'HS220(US)'
-                 Dimmable.allocate
-               else
-                 NonDimmable.allocate
-               end
-      object.send :initialize, ip
-      object
-    end
-  end
-
-  # Most devices are not dimmable
-  class NonDimmable < Device
-    attr_reader :ip, :sysinfo
+    attr_reader :ip
 
     # initialize
     def initialize(ip)
@@ -44,11 +29,27 @@ class Kasa
       relay OFF
     end
 
+    # Factory
+    def self.new(ip)
+      model = Kasa::Protocol.get(ip, '/system/get_sysinfo')['model']
+      object = if model.eql? 'HS220(US)'
+                 Dimmable.allocate
+               else
+                 NonDimmable.allocate
+               end
+      object.send :initialize, ip
+      object
+    end
+
     private
 
     def relay(state)
       Kasa::Protocol.get(@ip, '/system/set_relay_state/state', state)
     end
+  end
+
+  # Most devices are not dimmable
+  class NonDimmable < Device
   end
 
   # add dimmable device
