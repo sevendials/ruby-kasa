@@ -1,0 +1,56 @@
+---
+sw_ver: 1.0.11 Build 211013 Rel.170827
+hw_ver: '2.0'
+model: HS300(US)
+deviceId: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+oemId: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+hwId: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+rssi: -21
+latitude_i: 0
+longitude_i: 0
+alias: TP-LINK_Power Strip_DD06
+status: new
+mic_type: IOT.SMARTPLUGSWITCH
+feature: TIM:ENE
+mac: B0:A7:B9:80:DD:06
+updating: 0
+led_off: 0
+children:
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF900
+  state: 1
+  alias: Plug 1
+  on_time: 4877
+  next_action:
+    type: -1
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF901
+  state: 1
+  alias: Plug 2
+  on_time: 1487410
+  next_action:
+    type: -1
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF902
+  state: 1
+  alias: Plug 3
+  on_time: 1487410
+  next_action:
+    type: -1
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF903
+  state: 1
+  alias: Power to living room TV
+  on_time: 1487410
+  next_action:
+    type: -1
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF904
+  state: 1
+  alias: Power to sound bar
+  on_time: 1487410
+  next_action:
+    type: -1
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF905
+  state: 0
+  alias: Living room back lights
+  on_time: 0
+  next_action:
+    type: -1
+child_num: 6
+err_code: 0
