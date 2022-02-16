@@ -23,8 +23,8 @@ class Kasa
     ip_range.each do |ip|
       threads << Thread.new do
         @devices << Kasa::Factory.new(ip)
-      rescue StandardError => e
-        puts e
+      rescue StandardError => _e
+        nil
       end
     end
     threads.each(&:join)
