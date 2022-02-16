@@ -1,9 +1,6 @@
 # Kasa
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/kasa`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
+Connect directly to TP Link Kasa devices on your local network
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -21,8 +18,20 @@ Or install it yourself as:
     $ gem install kasa
 
 ## Usage
+To scan local network and turn on first device:
+```
+require 'kasa'
 
-TODO: Write usage instructions here
+kasa = Kasa.new
+kasa.devices.first.on
+```
+To connect to known host and adjust brightness:
+```
+require 'kasa'
+
+device = Kasa::Factory.new('192.168.1.55')
+device.brightness=50
+```
 
 ## Development
 
@@ -32,4 +41,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/kasa.
+Bug reports and pull requests are welcome on GitHub at https://github.com/sevendials/ruby-kasa.
