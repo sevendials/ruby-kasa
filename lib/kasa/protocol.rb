@@ -8,8 +8,9 @@ class Kasa
     KASA_PORT = 9999
 
     # get result from request
-    def self.get(ip, location, value = nil)
+    def self.get(ip, location:, value: nil, extra: {})
       request = request_to_hash location, value
+      request.merge! extra
 
       encoded_response = Timeout.timeout(TIMEOUT) do
         transport(ip, encode(request.to_json))

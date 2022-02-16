@@ -16,7 +16,7 @@ class Kasa
 
     # Get system information
     def sysinfo
-      Kasa::Protocol.get(@ip, '/system/get_sysinfo')
+      Kasa::Protocol.get(@ip, location: '/system/get_sysinfo')
     end
 
     # Turn on light
@@ -32,7 +32,11 @@ class Kasa
     private
 
     def relay(state)
-      Kasa::Protocol.get(@ip, '/system/set_relay_state/state', state)
+      Kasa::Protocol.get(
+        @ip,
+        location: '/system/set_relay_state/state',
+        value: state
+      )
     end
   end
 
@@ -49,11 +53,42 @@ class Kasa
 
     # Set brightness
     def brightness=(level)
-      Kasa::Protocol.get(@ip, '/smartlife.iot.dimmer/set_brightness/brightness', level)
+      Kasa::Protocol.get(
+        @ip,
+        location: '/smartlife.iot.dimmer/set_brightness/brightness',
+        value: level
+      )
     end
   end
 
   # add dimmable device
   class SmartStrip < NonDimmable
+    attr_accessor :children
+
+    def initialize(ip)
+      super
+      @children = @sysinfo['children'].map { |c| c['id'] }
+    end
+
+    # Turn on light
+    def on(index)
+      relay ON, index
+    end
+
+    # Turn off light
+    def off(index)
+      relay OFF, index
+    end
+
+    private
+
+    def relay(state, index)
+      Kasa::Protocol.get(
+        @ip,
+        location: '/system/set_relay_state/state',
+        value: state,
+        extra: { context: { child_ids: [@children[index]] } }
+      )
+    end
   end
 end
