@@ -6,7 +6,7 @@ require 'yaml'
 
 class Kasa
   class Protocol
-    def self.get(ip, location:, value: nil, extra: {})
+    def self.get(ip, location:, value: nil, extra: {}) # rubocop:disable Method/MethodLength,Metrics/AbcSize
       example_path = RSpec.current_example.example_group.to_s.gsub('::', '/').sub('RSpec/ExampleGroups',
                                                                                   'spec/fixtures/record')
       example_test = RSpec.current_example.description.gsub(/[^[:word:]*]/, '_')
