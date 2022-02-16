@@ -22,13 +22,13 @@ RSpec.describe Kasa::Factory do
 
     context 'when device is turned on with valid index' do
       it 'succeeds' do
-        expect(device.on(1)).to eq({ foo: 2 })
+        expect(device.on(1)).to eq({ 'err_code' => 0 })
       end
     end
 
     context 'when device is turned on with invalid index' do
       it 'succeeds' do
-        expect(device.on(7)).to eq({ foo: 3 })
+        expect(device.on(7)).to eq({ 'err_code' => -14, 'err_msg' => 'entry not exist' })
       end
     end
   end

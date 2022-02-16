@@ -2,9 +2,9 @@
 sw_ver: 1.0.11 Build 211013 Rel.170827
 hw_ver: '2.0'
 model: HS300(US)
-deviceId: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-oemId: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-hwId: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+deviceId: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF9
+oemId: 32BD0B21AA9BF8E84737D1DB1C66E883
+hwId: 955F433CBA24823A248A59AA64571A73
 rssi: -21
 latitude_i: 0
 longitude_i: 0
@@ -16,37 +16,37 @@ mac: B0:A7:B9:80:DD:06
 updating: 0
 led_off: 0
 children:
-- id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF900
   state: 1
   alias: Plug 1
-  on_time: 3217
+  on_time: 4878
   next_action:
     type: -1
-- id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF901
   state: 1
   alias: Plug 2
-  on_time: 1485750
+  on_time: 1487411
   next_action:
     type: -1
-- id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF902
   state: 1
   alias: Plug 3
-  on_time: 1485750
+  on_time: 1487411
   next_action:
     type: -1
-- id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF903
   state: 1
   alias: Power to living room TV
-  on_time: 1485750
+  on_time: 1487411
   next_action:
     type: -1
-- id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF904
   state: 1
   alias: Power to sound bar
-  on_time: 1485750
+  on_time: 1487411
   next_action:
     type: -1
-- id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- id: 80066A7CD00C2D569A96DC1AFEAD25DF1F073BF905
   state: 0
   alias: Living room back lights
   on_time: 0
