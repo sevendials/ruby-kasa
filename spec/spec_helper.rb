@@ -4,26 +4,22 @@ require 'kasa'
 require 'fileutils'
 require 'yaml'
 
+# Monkey patch to capture and retrieve output from get() , similar to VCR
 class Kasa
   class Protocol
-    def self.get(ip, location:, value: nil, extra: {}) # rubocop:disable Method/MethodLength,Metrics/AbcSize
+    old_method = singleton_method(:get)
+    define_singleton_method(:get) do |ip, location:, value: nil, extra: {}|
       example_path = RSpec.current_example.example_group.to_s.gsub('::', '/').sub('RSpec/ExampleGroups',
                                                                                   'spec/fixtures/record')
       example_test = RSpec.current_example.description.gsub(/[^[:word:]*]/, '_')
       encoded_args = Base64.urlsafe_encode64((ip + location + value.to_s + extra.to_s), padding: false)
       example = "#{example_path}/#{example_test}/#{encoded_args}.yml"
 
+      # If output was captured then use that
       if File.exist? example
         YAML.load_file example
       else
-        request = request_to_hash location, value
-        request.merge! extra
-
-        encoded_response = Timeout.timeout(TIMEOUT) do
-          transport(ip, encode(request.to_json))
-        end
-
-        result = strip_location(location, decode(encoded_response))
+        result = old_method.call(ip, location: location, value: value, extra: extra)
 
         FileUtils.mkdir_p File.dirname example
         File.write(example, result.to_yaml)
@@ -33,6 +29,7 @@ class Kasa
     end
   end
 end
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
