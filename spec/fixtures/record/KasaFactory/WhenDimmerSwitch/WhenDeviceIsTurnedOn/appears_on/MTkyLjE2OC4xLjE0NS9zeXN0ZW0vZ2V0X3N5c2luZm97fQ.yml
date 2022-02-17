@@ -1,0 +1,42 @@
+---
+sw_ver: 1.0.8 Build 210423 Rel.075507
+hw_ver: '2.0'
+model: HS220(US)
+deviceId: 8006A47B29908106943388D1CD53F86A1D9E8123
+oemId: 97D03CA037C71B6BCFAB8705E9B0C417
+hwId: CA321A94521D18706FC7C34CA84F99A4
+rssi: -40
+latitude_i: 333114
+longitude_i: -1124458
+alias: Pendant Lights
+status: new
+mic_type: IOT.SMARTPLUGSWITCH
+feature: TIM
+mac: 84:D8:1B:72:79:4D
+updating: 0
+led_off: 0
+relay_state: 1
+brightness: 25
+on_time: 0
+icon_hash: ''
+dev_name: Wi-Fi Smart Dimmer
+active_mode: schedule
+next_action:
+  type: 1
+  id: 2CDD32118077B74134358331E375B00F
+  schd_time: 82800
+  action: 3
+  dimmer:
+    on_off: 1
+    brightness: 75
+    transition_period: 1000
+preferred_state:
+- index: 0
+  brightness: 100
+- index: 1
+  brightness: 75
+- index: 2
+  brightness: 50
+- index: 3
+  brightness: 25
+err_code: 0
