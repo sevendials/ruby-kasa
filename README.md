@@ -25,6 +25,12 @@ require 'kasa'
 kasa = Kasa.new
 kasa.devices.first.on
 ```
+
+Local network device is detected but can be optionally overridden:
+```
+Kasa.new(discover_interface_override: 'eth1')
+```
+
 To connect to known host and adjust brightness:
 ```
 require 'kasa'

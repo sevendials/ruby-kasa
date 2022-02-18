@@ -29,12 +29,22 @@ class Kasa
       relay OFF
     end
 
+    # Is relay off?
+    def off?
+      relay_state.zero?
+    end
+
+    # Is relay on?
+    def on?
+      relay_state.eql? 1
+    end
+
+    private
+
     # Check light state
     def relay_state
       Kasa::Protocol.get(@ip, location: '/system/get_sysinfo/relay_state')
     end
-
-    private
 
     def relay(state)
       Kasa::Protocol.get(
@@ -85,7 +95,22 @@ class Kasa
       relay OFF, index
     end
 
+    def off?(index)
+      relay_state(index).zero?
+    end
+
+    def on?(index)
+      relay_state(index).eql? 1
+    end
+
     private
+
+    def relay_state(index)
+      Kasa::Protocol.get(
+        @ip,
+        location: '/system/get_sysinfo/children'
+      )[index]['state']
+    end
 
     def relay(state, index)
       Kasa::Protocol.get(
