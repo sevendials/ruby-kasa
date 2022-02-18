@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'json'
+require 'socket'
+
 class Kasa
   # TP link protocol
   class Protocol

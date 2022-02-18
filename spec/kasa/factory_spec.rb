@@ -30,7 +30,7 @@ RSpec.describe Kasa::Factory do
       end
 
       it 'appears on' do
-        expect(device.sysinfo['relay_state']).to be 1
+        expect(device.relay_state).to be 1
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Kasa::Factory do
       end
 
       it 'reports as off' do
-        expect(device.sysinfo['relay_state']).to be 0
+        expect(device.relay_state).to be 0
       end
     end
   end

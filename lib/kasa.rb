@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'socket'
-require 'json'
 require 'timeout'
 require 'base64'
 require_relative 'kasa/version'
