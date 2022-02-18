@@ -29,6 +29,11 @@ class Kasa
       relay OFF
     end
 
+    # Check light state
+    def relay_state
+      Kasa::Protocol.get(@ip, location: '/system/get_sysinfo/relay_state')
+    end
+
     private
 
     def relay(state)
