@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Directly control Kasa devices"
   spec.homepage      = "https://github.com/sevendials/ruby-kasa"
   spec.required_ruby_version = ">= 2.6.0"
+  spec.license = "GPL-3.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/sevendials/ruby-kasa"
@@ -28,10 +29,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
-  spec.add_dependency "json"
-  spec.add_development_dependency "rubocop-rspec"
-  spec.add_development_dependency "irb"
-  spec.add_development_dependency "rdoc"
+  spec.add_development_dependency "rubocop-rspec", "~> 2.8"
+  spec.add_development_dependency "irb", "~> 1.4"
+  spec.add_development_dependency "rdoc", "~> 6.4"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
