@@ -19,7 +19,15 @@ class Kasa
         transport(ip, encode(request.to_json))
       end
 
-      strip_location(location, decode(encoded_response))
+      response = strip_location(location, decode(encoded_response))
+      validate response
+
+      response
+    end
+
+    # examine error code
+    def self.validate(response)
+      raise response.to_s unless response['err_code'].zero?
     end
 
     # strip away the request location from the response

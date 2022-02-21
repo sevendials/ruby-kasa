@@ -24,6 +24,14 @@ RSpec.describe Kasa::Factory do
       end
     end
 
+    context 'when device is turned on with invalid index' do
+      it 'throws an error' do
+        expect do
+          device.brightness = 101
+        end.to raise_error(RuntimeError).with_message('{"err_code"=>-3, "err_msg"=>"invalid argument"}')
+      end
+    end
+
     context 'when device is turned on' do
       before do
         device.on
