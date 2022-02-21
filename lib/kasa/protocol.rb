@@ -27,7 +27,7 @@ class Kasa
 
     # examine error code
     def self.validate(response)
-      raise response.to_s unless response['err_code'].zero?
+      raise response.to_json unless response['err_code'].zero?
     end
 
     # strip away the request location from the response

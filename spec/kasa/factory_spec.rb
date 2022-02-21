@@ -28,7 +28,7 @@ RSpec.describe Kasa::Factory do
       it 'throws an error' do
         expect do
           device.brightness = 101
-        end.to raise_error(RuntimeError).with_message('{"err_code"=>-3, "err_msg"=>"invalid argument"}')
+        end.to raise_error(RuntimeError).with_message('{"err_code":-3,"err_msg":"invalid argument"}')
       end
     end
 
@@ -79,8 +79,8 @@ RSpec.describe Kasa::Factory do
     end
 
     context 'when device is turned on with invalid index' do
-      it 'succeeds' do
-        expect(device.on(7)).to eq({ 'err_code' => -14, 'err_msg' => 'entry not exist' })
+      it 'returns error code 14' do
+        expect { device.on(7) }.to raise_error(RuntimeError).with_message '{"err_code":-14,"err_msg":"entry not exist"}'
       end
     end
   end
