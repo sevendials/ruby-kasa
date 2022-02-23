@@ -32,7 +32,7 @@ jobs:
           tag_name: ${{ github.ref }}
             #       body_path: CHANGELOG.md
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.CREATE_RELEASE_TOKEN }}
 
       - name: Publish to RubyGems
         run: |
