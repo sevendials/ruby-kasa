@@ -6,12 +6,15 @@ class Kasa
     ON = 1
     OFF = 0
 
-    attr_reader :ip
+    attr_reader :ip, :alias, :model, :dev_name, :mac
 
     # initialize
-    def initialize(ip)
+    def initialize(ip, args)
       @ip = ip
-      @sysinfo = sysinfo
+      @alias = args['alias']
+      @model = args['model']
+      @dev_name = args['dev_name']
+      @mac = args['mac']
     end
 
     # Get system information
@@ -70,8 +73,8 @@ class Kasa
     def brightness=(level)
       Kasa::Protocol.get(
         @ip,
-        location: '/smartlife.iot.dimmer/set_brightness/brightness',
-        value: level
+        location: '/smartlife.iot.dimmer/set_brightness',
+        value: { brightness: level }
       )
     end
   end
@@ -80,9 +83,9 @@ class Kasa
   class SmartStrip < NonDimmable
     attr_accessor :children
 
-    def initialize(ip)
+    def initialize(ip, args)
       super
-      @children = @sysinfo['children'].map { |c| c['id'] }
+      @children = args['children'].map { |c| c['id'] }
     end
 
     # Turn on light
