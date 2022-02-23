@@ -19,7 +19,8 @@ class Kasa
         transport(ip, encode(request.to_json))
       end
 
-      response = strip_location(location, decode(encoded_response))
+      response = JSON.parse decode(encoded_response)
+      response = strip_location(location, response)
       validate response
 
       response
@@ -27,13 +28,12 @@ class Kasa
 
     # examine error code
     def self.validate(response)
-      raise response.to_json unless response['err_code'].zero?
+      raise response.to_json if response.is_a?(Hash) && response['err_code']&.negative?
     end
 
     # strip away the request location from the response
     def self.strip_location(location, response)
       location = location.split('/').reject(&:empty?)
-      response = JSON.parse response
       location.each do |j|
         response = (response[j] or response)
       end

@@ -11,6 +11,7 @@ class Kasa
     NonDimmable => [
       'HS200(US)',
       'HS105(US)',
+      'HS103(US)',
       'HS210(US)'
     ],
     SmartStrip => [
