@@ -11,6 +11,7 @@ class Kasa
     NonDimmable => [
       'HS200(US)',
       'HS105(US)',
+      'HS103(US)',
       'HS210(US)'
     ],
     SmartStrip => [
@@ -24,13 +25,14 @@ class Kasa
   class Factory
     # Factory
     def self.new(ip)
-      model = Kasa::Protocol.get(ip, location: '/system/get_sysinfo')['model']
+      sysinfo = Kasa::Protocol.get(ip, location: '/system/get_sysinfo')
+      model = sysinfo['model']
       begin
         object = DEVICE_TYPES.detect { |_k, v| v.include? model }.first.allocate
       rescue StandardError => _e
         raise "#{model} not supported"
       end
-      object.send :initialize, ip
+      object.send :initialize, ip, sysinfo
       object
     end
   end
