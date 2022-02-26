@@ -2,6 +2,7 @@
 
 require 'timeout'
 require 'base64'
+require 'ipaddr'
 require 'logger'
 require 'terminal-table'
 require_relative 'kasa/version'
