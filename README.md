@@ -28,7 +28,9 @@ kasa.devices.first.on
 
 Local network device is detected but can be optionally overridden:
 ```
-Kasa.new(discover_interface_override: 'eth1')
+require 'kasa'
+
+kasa = Kasa.new(discover_interface_override: 'eth1')
 ```
 
 To connect to known host and adjust brightness:
@@ -37,6 +39,14 @@ require 'kasa'
 
 device = Kasa::Factory.new('192.168.1.55')
 device.brightness=50
+```
+
+To get device summary:
+```
+require 'kasa'
+
+kasa = Kasa.new
+kasa.summary
 ```
 
 ## Development
