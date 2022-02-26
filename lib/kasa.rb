@@ -3,6 +3,7 @@
 require 'timeout'
 require 'base64'
 require 'logger'
+require 'terminal-table'
 require_relative 'kasa/version'
 require_relative 'kasa/factory'
 
@@ -31,6 +32,20 @@ class Kasa
     end
     threads.each(&:join)
     @devices
+  end
+
+  # human readable devices summary
+  def summary
+    all_headings = @devices.first.instance_variables
+    common_headings = @devices.each_with_object(all_headings) do |d, memo|
+      memo & d.instance_variables
+    end
+    rows = devices.map do |d|
+      common_headings.map do |a|
+        d.instance_variable_get a
+      end
+    end
+    puts Terminal::Table.new headings: common_headings, rows: rows
   end
 
   private

@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'timeout', '~> 0.1'
   spec.add_dependency 'base64', '~> 0.1'
   spec.add_dependency 'logger', '~> 1.4'
+  spec.add_dependency 'terminal-table', '~> 3.0'
 
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
